@@ -2,7 +2,7 @@
 //  SceneDelegate.swift
 //  NiestierovNatifeTest
 //
-//  Created by Denys Niestierov on 17.05.2022.
+//  Created by Denys Niestierov on 22.07.2022.
 //
 
 import UIKit

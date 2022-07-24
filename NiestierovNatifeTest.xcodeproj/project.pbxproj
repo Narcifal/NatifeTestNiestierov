@@ -67,6 +67,14 @@
 			path = NetworkService;
 			sourceTree = "<group>";
 		};
+		9A7440FE288D5DEF00B28655 /* PostTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				9AFB51BE288A91B8009AB3B7 /* PostTableViewCell.swift */,
+			);
+			path = PostTableViewCell;
+			sourceTree = "<group>";
+		};
 		9A8476EC2833EC14006F29C1 = {
 			isa = PBXGroup;
 			children = (
@@ -119,6 +127,7 @@
 		9A84770E2833ECB4006F29C1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				9A7440FE288D5DEF00B28655 /* PostTableViewCell */,
 				9A8476FE2833EC15006F29C1 /* Main.storyboard */,
 				9AFB51BF288A91B8009AB3B7 /* PostTableViewCell.xib */,
 			);
@@ -128,7 +137,6 @@
 		9A84770F2833ECC5006F29C1 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				9AFB51BE288A91B8009AB3B7 /* PostTableViewCell.swift */,
 				9AFB51C2288A9B1F009AB3B7 /* PostListData.swift */,
 				9A29819D288B012100E0C99E /* PostDetailsData.swift */,
 			);

@@ -10,7 +10,7 @@ import UIKit
 final class PostListViewController: UIViewController {
 
     //MARK: - IBOutlets -
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet private weak var tableView: UITableView!
     
     //MARK: - Variables -
     private var recievedData = [Posts]()
@@ -23,7 +23,7 @@ final class PostListViewController: UIViewController {
     }
     
     //MARK: - IBActions -
-    @IBAction func sortPostLst(_ sender: UIBarButtonItem) {
+    @IBAction private func sortPostLst(_ sender: UIBarButtonItem) {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
         let sortByRate = UIAlertAction(title: "Sort by Rate", style: .default) { (action) in

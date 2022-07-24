@@ -10,15 +10,15 @@ import UIKit
 final class PostTableViewCell: UITableViewCell {
 
     //MARK: IBOutlets
-    @IBOutlet weak var title: UILabel!
-    @IBOutlet weak var postText: UILabel!
-    @IBOutlet weak var likes: UILabel!
-    @IBOutlet weak var date: UILabel!
-    @IBOutlet weak var expandButton: UIButton!
+    @IBOutlet private weak var title: UILabel!
+    @IBOutlet private weak var postText: UILabel!
+    @IBOutlet private weak var likes: UILabel!
+    @IBOutlet private weak var date: UILabel!
+    @IBOutlet private weak var expandButton: UIButton!
     
     //MARK: - Constants -
-    let expandButtonTitle = "Expand"
-    let collapseButtonTitle = "Collapse"
+    private let expandButtonTitle = "Expand"
+    private let collapseButtonTitle = "Collapse"
     
     //MARK: - Variables -
     var cellUpdate: (() -> Void)!

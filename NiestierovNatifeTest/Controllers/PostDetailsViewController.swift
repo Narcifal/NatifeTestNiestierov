@@ -10,7 +10,7 @@ import UIKit
 final class PostDetailsViewController: UIViewController {
 
     //MARK: - IBOutlets -
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var textLabel: UILabel!
     @IBOutlet private weak var dateLabel: UILabel!

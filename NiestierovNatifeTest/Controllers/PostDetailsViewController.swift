@@ -24,13 +24,16 @@ final class PostDetailsViewController: UIViewController {
         super.viewDidLoad()
         getDetailData()
     }
-    
-    private func getDetailData() {
+}
+
+//MARK: - Private -
+private extension PostDetailsViewController {
+    func getDetailData() {
         let idString = postId.toString()
         let urlString = "https://raw.githubusercontent.com/anton-natife/jsons/master/api/posts/\(idString).json"
 
         guard let url = URL(string: urlString) else { return }
-        NetworkService.shared.getData(url: url, expacting: PostDetailsData.self) { result in
+        NetworkService.shared.getData(url: url, expecting: PostDetailsData.self) { result in
             switch result {
             case .failure(let error):
                 print(error)
@@ -40,7 +43,7 @@ final class PostDetailsViewController: UIViewController {
         }
     }
     
-    private func updateDetail(postDetail: Post) {
+    func updateDetail(postDetail: Post) {
         let urlString = postDetail.postImage
         guard let url = URL(string: urlString) else { return }
         

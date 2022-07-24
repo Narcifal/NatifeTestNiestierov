@@ -12,14 +12,14 @@ class NetworkService {
     static let shared = NetworkService()
     
     //MARK: - Internal -
-    func getData<T: Codable>(url: URL, expacting: T.Type, completion: @escaping (Result<T, Error>) -> Void) {
+    func getData<T: Codable>(url: URL, expecting: T.Type, completion: @escaping (Result<T, Error>) -> Void) {
         let session = URLSession.shared
         session.dataTask(with: url) { (data, _, error) in
             guard let data = data, error == nil else {
                 completion(.failure(NetworkingError.failedResponseJSON))
                 return
             }
-            if let post = self.parseJson(data, expacting: expacting) {
+            if let post = self.parseJson(data, expacting: expecting) {
                 completion(.success(post))
             } else {
                 completion(.failure(NetworkingError.failedParseJSON))

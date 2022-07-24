@@ -2,7 +2,7 @@
 //  Constants.swift
 //  NiestierovNatifeTest
 //
-//  Created by Denys Niestierov on 17.05.2022.
+//  Created by Denys Niestierov on 22.07.2022.
 //
 
 import Foundation
@@ -16,7 +16,6 @@ struct Constants {
     
     struct URL {
         static let postList = "https://raw.githubusercontent.com/anton-natife/jsons/master/api/main.json"
-        static let postDetails = ""
     }
     
     struct Segue {

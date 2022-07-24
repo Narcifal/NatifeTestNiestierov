@@ -16,33 +16,46 @@ final class PostTableViewCell: UITableViewCell {
     @IBOutlet weak var date: UILabel!
     @IBOutlet weak var expandButton: UIButton!
     
+    //MARK: - Constants -
+    let expandButtonTitle = "Expand"
+    let collapseButtonTitle = "Collapse"
+    
+    //MARK: - Variables -
+    var cellUpdate: (() -> Void)!
+    
     //MARK: - Iternal -
-    func configure(with postList: Posts) {
+    func configure(with postList: Posts, update: @escaping () -> Void) {
         self.title.text = postList.title
         postText.text = postList.preview_text
         likes.text = postList.likes_count.toString()
         self.date.text = postList.timeshamp.toDateString()
-
+        
         expandButton.isHidden = isExpandButtonNeeded()
+        cellUpdate = update
     }
     
+    //MARK: - Static -
     static func nib() -> UINib {
-        return UINib(nibName: "PostTableViewCell", bundle: nil)
-    }
-    
-    //MARK: - Private -
-    private func isExpandButtonNeeded() -> Bool{
-        return postText.maxNumberOfLines <= 2
+        return UINib(nibName: Constants.Cell.postTableViewCell, bundle: nil)
     }
     
     //MARK: IBActions
-    @IBAction func expandText(_ sender: UIButton) {
-        if expandButton.currentTitle == "Expand" {
-            expandButton.setTitle("Collapse", for: .normal)
-            postText.numberOfLines = 0
-        } else {
-            expandButton.setTitle("Expand", for: .normal)
-            postText.numberOfLines = 2
-        }
+    @IBAction private func expandStateButtonTapped(_ sender: UIButton) {
+        let isExpanded = expandButton.currentTitle == expandButtonTitle
+        changeButtonTitle(isExpanded: isExpanded)
+        cellUpdate()
+    }
+}
+
+//MARK: - Private -
+private extension PostTableViewCell {
+    func isExpandButtonNeeded() -> Bool{
+        return postText.maxNumberOfLines - 1 <= 2
+    }
+    
+    func changeButtonTitle(isExpanded: Bool) {
+        let buttonTitle = isExpanded ? collapseButtonTitle : expandButtonTitle
+        expandButton.setTitle(buttonTitle, for: .normal)
+        postText.numberOfLines = isExpanded ? 0 : 2
     }
 }

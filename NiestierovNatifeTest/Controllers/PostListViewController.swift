@@ -22,51 +22,24 @@ final class PostListViewController: UIViewController {
         getPostList()
     }
     
-    //MARK: - Private -
-    private func setupTableView() {
-        tableView.register(
-            PostTableViewCell.nib(),
-            forCellReuseIdentifier: Constants.Cell.postTableViewCell)
-        tableView.dataSource = self
-        tableView.delegate = self
-    }
-
-    private func getPostList() {
-        let urlString = Constants.URL.postList
-
-        guard let url = URL(string: urlString) else { return }
-        NetworkService.shared.getData(url: url, expacting: PostListData.self) { result in
-            switch result {
-            case .failure(let error):
-                print(error)
-            case .success(let posts):
-                self.updatePosts(posts: posts.posts)
-            }
-        }
-    }
-    
-    private func updatePosts(posts: [Posts]) {
-        DispatchQueue.main.async {
-            self.recievedData = posts
-            self.tableView.reloadData()
-        }
-    }
-    
     //MARK: - IBActions -
     @IBAction func sortPostLst(_ sender: UIBarButtonItem) {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
         let sortByRate = UIAlertAction(title: "Sort by Rate", style: .default) { (action) in
             self.recievedData = self.recievedData.sorted(by: { $0.likes_count > $1.likes_count})
+            self.tableView.reloadData()
         }
 
         let sortByDate = UIAlertAction(title: "Sort by Date", style: .default) { (action) in
             
             self.recievedData = self.recievedData.sorted(by: { $0.timeshamp > $1.timeshamp})
+            self.tableView.reloadData()
         }
         
         let sortByDefault = UIAlertAction(title: "Sort by Default", style: .default) { (action) in
             self.recievedData = self.recievedData.sorted(by: { $0.postId > $1.postId})
+            self.tableView.reloadData()
         }
 
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
@@ -77,7 +50,6 @@ final class PostListViewController: UIViewController {
         actionSheet.addAction(cancelAction)
 
         self.present(actionSheet, animated: true, completion: nil)
-        self.tableView.reloadData()
     }
     
     //MARK: - Iternal -
@@ -106,17 +78,50 @@ extension PostListViewController: UITableViewDataSource, UITableViewDelegate {
             withIdentifier: Constants.Cell.postTableViewCell, for: indexPath) as! PostTableViewCell
         
         let post = recievedData[indexPath.row]
-        cell.configure(with: post)
+        cell.configure(with: post, update: updateCellSize)
         
-//        DispatchQueue.main.async {
-//            tableView.beginUpdates()
-//            tableView.endUpdates()
-//        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: Constants.Segue.goToPostDetails, sender: nil)
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+
+//MARK: - Private -
+private extension PostListViewController {
+    func setupTableView() {
+        tableView.register(
+            PostTableViewCell.nib(),
+            forCellReuseIdentifier: Constants.Cell.postTableViewCell)
+        tableView.dataSource = self
+        tableView.delegate = self
+    }
+
+    func getPostList() {
+        let urlString = Constants.URL.postList
+
+        guard let url = URL(string: urlString) else { return }
+        NetworkService.shared.getData(url: url, expecting: PostListData.self) { result in
+            switch result {
+            case .failure(let error):
+                print(error)
+            case .success(let postListData):
+                self.updatePosts(posts: postListData.posts)
+            }
+        }
+    }
+    
+    func updatePosts(posts: [Posts]) {
+        DispatchQueue.main.async {
+            self.recievedData = posts
+            self.tableView.reloadData()
+        }
+    }
+    
+    func updateCellSize() {
+        tableView.beginUpdates()
+        tableView.endUpdates()
     }
 }

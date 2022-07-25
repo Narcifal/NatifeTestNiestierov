@@ -24,32 +24,8 @@ final class PostListViewController: UIViewController {
     
     //MARK: - IBActions -
     @IBAction private func sortPostLst(_ sender: UIBarButtonItem) {
-        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-
-        let sortByRate = UIAlertAction(title: "Sort by Rate", style: .default) { (action) in
-            self.recievedData = self.recievedData.sorted(by: { $0.likes_count > $1.likes_count})
-            self.tableView.reloadData()
-        }
-
-        let sortByDate = UIAlertAction(title: "Sort by Date", style: .default) { (action) in
-            
-            self.recievedData = self.recievedData.sorted(by: { $0.timeshamp > $1.timeshamp})
-            self.tableView.reloadData()
-        }
-        
-        let sortByDefault = UIAlertAction(title: "Sort by Default", style: .default) { (action) in
-            self.recievedData = self.recievedData.sorted(by: { $0.postId > $1.postId})
-            self.tableView.reloadData()
-        }
-
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-
-        actionSheet.addAction(sortByRate)
-        actionSheet.addAction(sortByDate)
-        actionSheet.addAction(sortByDefault)
-        actionSheet.addAction(cancelAction)
-
-        self.present(actionSheet, animated: true, completion: nil)
+        let alert = createActionSheet()
+        self.present(alert, animated: true, completion: nil)
     }
     
     //MARK: - Iternal -
@@ -66,14 +42,12 @@ final class PostListViewController: UIViewController {
 
 //MARK: - UITableViewDataSource, UITableViewDelegate -
 extension PostListViewController: UITableViewDataSource, UITableViewDelegate {
-    //Amount of cells
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return recievedData.count
+        recievedData.count
     }
     
-    //Create tableView reusable cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //Create a dequeue reusable cell
         let cell = tableView.dequeueReusableCell(
             withIdentifier: Constants.Cell.postTableViewCell, for: indexPath) as! PostTableViewCell
         
@@ -118,6 +92,35 @@ private extension PostListViewController {
             self.recievedData = posts
             self.tableView.reloadData()
         }
+    }
+    
+    func createActionSheet() -> UIAlertController {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+
+        let sortByRate = UIAlertAction(title: "Sort by Rate", style: .default) { (action) in
+            self.recievedData = self.recievedData.sorted(by: { $0.likes_count > $1.likes_count})
+            self.tableView.reloadData()
+        }
+
+        let sortByDate = UIAlertAction(title: "Sort by Date", style: .default) { (action) in
+            
+            self.recievedData = self.recievedData.sorted(by: { $0.timeshamp > $1.timeshamp})
+            self.tableView.reloadData()
+        }
+        
+        let sortByDefault = UIAlertAction(title: "Sort by Default", style: .default) { (action) in
+            self.recievedData = self.recievedData.sorted(by: { $0.postId > $1.postId})
+            self.tableView.reloadData()
+        }
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+
+        actionSheet.addAction(sortByRate)
+        actionSheet.addAction(sortByDate)
+        actionSheet.addAction(sortByDefault)
+        actionSheet.addAction(cancelAction)
+        
+        return actionSheet
     }
     
     func updateCellSize() {

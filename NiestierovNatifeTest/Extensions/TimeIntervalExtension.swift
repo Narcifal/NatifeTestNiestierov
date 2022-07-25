@@ -7,7 +7,6 @@
 
 import Foundation
 
-//MARK: - TimeInterval Extension -
 extension TimeInterval {
     func toDateString(dateFormatter: String = "MMM d, HH:mm") -> String {
         let date = NSDate(timeIntervalSince1970: TimeInterval(self))

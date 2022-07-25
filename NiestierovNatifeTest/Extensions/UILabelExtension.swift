@@ -7,7 +7,6 @@
 
 import UIKit
 
-//MARK: - UILabel Extension -
 extension UILabel {
     var maxNumberOfLines: Int {
         let maxSize = CGSize(width: frame.size.width, height: CGFloat(MAXFLOAT))

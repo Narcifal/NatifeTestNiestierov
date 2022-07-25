@@ -7,7 +7,6 @@
 
 import Foundation
 
-//MARK: - Int Extension -
 extension Int {
     func toString() -> String {
         return String(self)

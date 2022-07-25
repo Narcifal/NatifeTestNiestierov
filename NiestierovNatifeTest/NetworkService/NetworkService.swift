@@ -32,6 +32,7 @@ class NetworkService {
         let decoder = JSONDecoder()
         do {
             let decodateData = try decoder.decode(expacting, from: data)
+            print(decodateData)
             return decodateData
         } catch {
             return nil
